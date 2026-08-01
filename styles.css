@@ -584,16 +584,41 @@ textarea:focus {
 }
 
 @media (max-width: 920px) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
   .app-shell {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .reading-space,
+  .side-panel {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .reading-space {
+    display: flex;
+    flex-direction: column;
   }
 
   .side-panel {
+    position: static;
+    z-index: auto;
+    clear: both;
     padding-top: 0;
   }
 
   .deck-stage {
+    display: flex;
+    flex-direction: column;
     grid-template-columns: 1fr;
+    width: 100%;
+    min-height: 0;
   }
 
   .deck-preview {
@@ -604,6 +629,14 @@ textarea:focus {
   .deck-note {
     right: 50%;
     transform: translateX(50%);
+  }
+
+  .message-box,
+  .history-box,
+  .ritual-box {
+    width: 100%;
+    background: #fffaf4;
+    backdrop-filter: none;
   }
 }
 
@@ -651,6 +684,42 @@ textarea:focus {
 
   .spread {
     grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .oracle-card,
+  .question-panel,
+  .deck-preview,
+  .card-face,
+  .flip-card {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .side-panel {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .message-box {
+    order: 1;
+  }
+
+  .ritual-box {
+    order: 2;
+  }
+
+  .history-box {
+    order: 3;
+  }
+
+  #historyList {
+    max-height: none;
+  }
+
+  .history-card-links a,
+  #historyList strong {
+    overflow-wrap: anywhere;
   }
 }
 
