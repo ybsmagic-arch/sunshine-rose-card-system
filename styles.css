@@ -653,3 +653,265 @@ textarea:focus {
     grid-template-columns: 1fr;
   }
 }
+
+/* 2026 brand edition — ivory, rose gold and quiet editorial spacing */
+:root {
+  --rose: #a5655f;
+  --rose-deep: #70433f;
+  --blush: #f2e1d9;
+  --sage: #7c8d7b;
+  --sage-deep: #4f6254;
+  --gold: #bd8c68;
+  --cream: #f8f1e8;
+  --paper: rgba(255, 252, 247, 0.9);
+  --ink: #322a25;
+  --muted: #776b62;
+  --line: rgba(113, 76, 56, 0.16);
+  --shadow: 0 26px 70px rgba(91, 66, 50, 0.11);
+  --soft-shadow: 0 16px 38px rgba(91, 66, 50, 0.1);
+}
+
+body {
+  background:
+    radial-gradient(circle at 8% 12%, rgba(212, 174, 148, 0.16), transparent 30rem),
+    radial-gradient(circle at 88% 48%, rgba(170, 133, 105, 0.1), transparent 32rem),
+    linear-gradient(135deg, #fbf6ef 0%, #f5ede3 52%, #fbf7f1 100%);
+}
+
+body::before {
+  opacity: 0.38;
+  background-image: radial-gradient(rgba(120, 84, 63, 0.2) 0.55px, transparent 0.55px);
+  background-size: 7px 7px;
+}
+
+.top-bar {
+  width: min(1280px, calc(100% - 3rem));
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.brand-mark {
+  gap: 0.72rem;
+  letter-spacing: 0.08em;
+}
+
+.brand-monogram {
+  display: grid;
+  width: 2.35rem;
+  height: 2.35rem;
+  place-items: center;
+  border: 1px solid rgba(189, 140, 104, 0.7);
+  border-radius: 50%;
+  color: var(--rose-deep);
+  font-family: "Noto Serif TC", "PMingLiU", serif;
+  font-size: 1.08rem;
+  background: rgba(255, 252, 247, 0.72);
+}
+
+.brand-name {
+  display: grid;
+  gap: 0.1rem;
+}
+
+.brand-name b {
+  font-family: "Noto Serif TC", "PMingLiU", serif;
+  font-size: 0.96rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+}
+
+.brand-name small {
+  color: var(--muted);
+  font-size: 0.55rem;
+  font-weight: 600;
+  letter-spacing: 0.19em;
+}
+
+.top-actions {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.top-actions a {
+  border-radius: 0;
+  border-bottom: 1px solid transparent;
+  font-weight: 600;
+}
+
+.top-actions a:hover {
+  border-bottom-color: var(--gold);
+  color: var(--rose-deep);
+  background: transparent;
+}
+
+.app-shell {
+  grid-template-columns: minmax(0, 1fr) minmax(20rem, 23rem);
+  gap: clamp(2rem, 4vw, 4.5rem);
+  width: min(1280px, calc(100% - 3rem));
+  padding-top: 2.2rem;
+}
+
+.brand-hero {
+  display: grid;
+  grid-template-columns: minmax(18rem, 1.08fr) minmax(18rem, 0.92fr);
+  align-items: center;
+  gap: clamp(1.6rem, 4vw, 3.8rem);
+  min-height: 29rem;
+  padding-top: 0;
+}
+
+.logo-stage {
+  position: relative;
+  margin: 0;
+}
+
+.logo-stage::before {
+  position: absolute;
+  inset: 8% -5% -8% 7%;
+  z-index: -1;
+  border: 1px solid rgba(189, 140, 104, 0.24);
+  content: "";
+}
+
+.logo-stage img {
+  display: block;
+  width: 100%;
+  border: 1px solid rgba(189, 140, 104, 0.18);
+  box-shadow: 0 34px 80px rgba(94, 64, 46, 0.16);
+}
+
+.intro-copy {
+  padding: 2rem 0;
+}
+
+.intro-copy .kicker {
+  color: var(--gold);
+  letter-spacing: 0.22em;
+}
+
+.intro-copy h1 {
+  max-width: none;
+  font-family: "Noto Serif TC", "PMingLiU", serif;
+  font-size: clamp(2.6rem, 4.4vw, 4.7rem);
+  font-weight: 500;
+  line-height: 1.22;
+  letter-spacing: 0.06em;
+}
+
+.intro-copy .lead {
+  max-width: 33rem;
+  font-size: 1rem;
+  line-height: 2;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.35rem;
+  border-bottom: 1px solid var(--gold);
+  padding: 0.55rem 0;
+  color: var(--rose-deep);
+  font-family: "Noto Serif TC", "PMingLiU", serif;
+  letter-spacing: 0.12em;
+}
+
+.hero-cta span {
+  color: var(--gold);
+}
+
+.question-panel,
+.message-box,
+.history-box,
+.ritual-box {
+  border-radius: 0;
+  box-shadow: var(--soft-shadow);
+}
+
+.question-panel {
+  padding: clamp(1.2rem, 2.5vw, 2rem);
+}
+
+.question-panel label,
+.message-box h2,
+.history-box h2,
+.ritual-box h2 {
+  font-family: "Noto Serif TC", "PMingLiU", serif;
+  font-weight: 600;
+}
+
+.prompt-chips button,
+.segmented,
+.mode-button,
+.draw-button,
+.mini-badge,
+.result-actions strong,
+#clearHistory {
+  border-radius: 2px;
+}
+
+.prompt-chips button {
+  border-color: rgba(165, 101, 95, 0.22);
+  color: var(--rose-deep);
+  background: #fbf6f0;
+}
+
+.draw-button {
+  background: linear-gradient(135deg, #6b4a3e, #9b6755 62%, #bd8c68);
+}
+
+.deck-preview,
+.deck-preview img,
+.flip-side,
+.flip-side img,
+.deck-note,
+textarea {
+  border-radius: 2px;
+}
+
+@media (max-width: 920px) {
+  .brand-hero {
+    grid-template-columns: 1fr 0.9fr;
+    min-height: auto;
+  }
+}
+
+@media (max-width: 680px) {
+  .top-bar,
+  .app-shell {
+    width: min(100% - 1.25rem, 42rem);
+  }
+
+  .brand-name small {
+    display: none;
+  }
+
+  .top-actions a {
+    padding-inline: 0.45rem;
+  }
+
+  .brand-hero {
+    grid-template-columns: 1fr;
+    gap: 1.8rem;
+    padding: 0.5rem 0 1rem;
+  }
+
+  .logo-stage {
+    width: calc(100% - 1.5rem);
+    margin-inline: auto;
+  }
+
+  .intro-copy {
+    padding: 0 0.5rem;
+    text-align: center;
+  }
+
+  .intro-copy h1 {
+    font-size: clamp(2.25rem, 11vw, 3.25rem);
+  }
+
+  .intro-copy .lead {
+    margin-inline: auto;
+  }
+}
