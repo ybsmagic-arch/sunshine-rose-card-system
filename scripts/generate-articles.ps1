@@ -74,6 +74,10 @@ foreach ($number in 1..33) {
     $_ -notmatch '^後記$' -and
     $_ -notmatch '^徵稿$'
   })
+  $bodyLines = @($bodyLines | ForEach-Object {
+    ($_ -replace '\s*【每一篇文章的末尾請放上一朵玫瑰的符號】\s*', '' `
+        -replace '\s*【每一篇文章的末尾請留下心得區】\s*', '').Trim()
+  } | Where-Object { $_ -and $_ -notmatch '^～?我的陽光玫瑰$' })
 
   # The legacy .doc contains an embedded binary block in rose 16. Keep the
   # paragraphs before and after it, and reconnect the sentence it interrupted.
