@@ -760,21 +760,8 @@ body::before {
 }
 
 .brand-mark {
-  gap: 0.72rem;
+  gap: 0;
   letter-spacing: 0.08em;
-}
-
-.brand-monogram {
-  display: grid;
-  width: 2.35rem;
-  height: 2.35rem;
-  place-items: center;
-  border: 1px solid rgba(189, 140, 104, 0.7);
-  border-radius: 50%;
-  color: var(--rose-deep);
-  font-family: "Noto Serif TC", "PMingLiU", serif;
-  font-size: 1.08rem;
-  background: rgba(255, 252, 247, 0.72);
 }
 
 .brand-name {
