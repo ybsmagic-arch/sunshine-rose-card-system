@@ -57,6 +57,7 @@ modeButtons.forEach((button) => {
   button.addEventListener("click", () => {
     mode = button.dataset.mode;
     modeButtons.forEach((item) => item.classList.toggle("is-active", item === button));
+    sessionStorage.removeItem("sunshineRoseCurrentReading");
     resetReading();
   });
 });
@@ -82,6 +83,14 @@ clearHistory.addEventListener("click", () => {
 function drawReading() {
   const count = mode === "three" ? 3 : 1;
   currentCards = shuffle(cards).slice(0, count);
+  renderReadingCards();
+  updateReading();
+  saveCurrentReading();
+  saveHistory();
+}
+
+function renderReadingCards(animate = true) {
+  const count = currentCards.length;
   spread.style.setProperty("--spread-count", count);
   spread.innerHTML = "";
 
@@ -98,11 +107,12 @@ function drawReading() {
     node.querySelector(".article-link").href = `articles/rose-${card.rose}.html`;
     node.querySelector(".card-face").addEventListener("click", () => revealCard(node));
     spread.append(node);
-    window.setTimeout(() => revealCard(node), 180 + index * 260);
+    if (animate) {
+      window.setTimeout(() => revealCard(node), 180 + index * 260);
+    } else {
+      revealCard(node);
+    }
   });
-
-  updateReading();
-  saveHistory();
 }
 
 function revealCard(node) {
@@ -130,7 +140,7 @@ function saveHistory() {
   history.unshift({
     at: new Date().toLocaleString("zh-TW", { hour12: false }),
     question,
-    cards: currentCards.map((card) => card.title)
+    cards: currentCards.map((card) => ({ rose: card.rose, title: card.title }))
   });
   localStorage.setItem("sunshineRoseHistory", JSON.stringify(history.slice(0, 12)));
   renderHistory();
@@ -148,9 +158,62 @@ function renderHistory() {
 
   history.forEach((item) => {
     const li = document.createElement("li");
-    li.innerHTML = `<strong>${escapeHtml(item.cards.join("、"))}</strong><br>${escapeHtml(item.question)}<br>${escapeHtml(item.at)}`;
+    const links = document.createElement("div");
+    links.className = "history-card-links";
+
+    item.cards.forEach((savedCard) => {
+      const cardData = typeof savedCard === "string"
+        ? cards.find((card) => card.title === savedCard)
+        : cards.find((card) => card.rose === savedCard.rose);
+      const title = typeof savedCard === "string" ? savedCard : savedCard.title;
+
+      if (cardData) {
+        const link = document.createElement("a");
+        link.href = `articles/rose-${cardData.rose}.html`;
+        link.textContent = `玫瑰 ${cardData.rose}・${title}`;
+        links.append(link);
+      } else {
+        const label = document.createElement("strong");
+        label.textContent = title;
+        links.append(label);
+      }
+    });
+
+    const meta = document.createElement("p");
+    meta.textContent = `${item.question}｜${item.at}`;
+    li.append(links, meta);
     historyList.append(li);
   });
+}
+
+function saveCurrentReading() {
+  sessionStorage.setItem("sunshineRoseCurrentReading", JSON.stringify({
+    mode,
+    question: input.value,
+    roses: currentCards.map((card) => card.rose)
+  }));
+}
+
+function restoreCurrentReading() {
+  try {
+    const saved = JSON.parse(sessionStorage.getItem("sunshineRoseCurrentReading"));
+    if (!saved?.roses?.length) return false;
+
+    const restoredCards = saved.roses
+      .map((rose) => cards.find((card) => card.rose === rose))
+      .filter(Boolean);
+    if (!restoredCards.length) return false;
+
+    mode = saved.mode === "three" ? "three" : "single";
+    modeButtons.forEach((button) => button.classList.toggle("is-active", button.dataset.mode === mode));
+    input.value = saved.question || "";
+    currentCards = restoredCards;
+    renderReadingCards(false);
+    updateReading();
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 function resetReading() {
@@ -189,4 +252,4 @@ function escapeHtml(value) {
 }
 
 renderHistory();
-resetReading();
+if (!restoreCurrentReading()) resetReading();
