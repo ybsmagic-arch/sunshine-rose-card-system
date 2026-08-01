@@ -79,6 +79,18 @@ foreach ($number in 1..33) {
         -replace '\s*【每一篇文章的末尾請留下心得區】\s*', '').Trim()
   } | Where-Object { $_ -and $_ -notmatch '^～?我的陽光玫瑰$' })
 
+  # The legacy Word file stores the short "I'" fragments in rose 06 as
+  # separate binary runs. Rejoin the affected sentences for clean display.
+  if ($number -eq 6) {
+    $roseSixText = ($bodyLines -join "`n")
+    $roseSixText = $roseSixText.Replace("「`nm possible!」", "「I'm possible!」")
+    $roseSixText = $roseSixText.Replace("轉變為「`nm possible」", "轉變為「I'm possible」")
+    $roseSixText = $roseSixText.Replace("將會是「`npossible」的原動力！", "將會是「I'm possible」的原動力！")
+    $roseSixText = $roseSixText.Replace("原來impossible就是`nm possible的來源！", "原來 impossible 就是 I'm possible 的來源！")
+    $roseSixText = $roseSixText.Replace("你是否能將它轉化為`nm possible的原動力？", "你是否能將它轉化為 I'm possible 的原動力？")
+    $bodyLines = @($roseSixText -split "`n")
+  }
+
   # The legacy .doc contains an embedded binary block in rose 16. Keep the
   # paragraphs before and after it, and reconnect the sentence it interrupted.
   if ($number -eq 16) {
