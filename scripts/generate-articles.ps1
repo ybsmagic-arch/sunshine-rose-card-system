@@ -60,12 +60,38 @@ foreach ($number in 1..33) {
   $titles[$number] = $heading
 
   $bodyStart = if ($number -eq 6) { 2 } else { 1 }
-  $bodyLines = $lines | Select-Object -Skip $bodyStart | Where-Object {
+  $bodyLines = @($lines | Select-Object -Skip $bodyStart | Where-Object {
     $_ -notmatch '^讀後心得$' -and
     $_ -notmatch '^～?我的陽光玫瑰$' -and
     $_ -notmatch '^每一篇文章的末尾請' -and
     $_ -notmatch '^後記$' -and
     $_ -notmatch '^徵稿$'
+  })
+
+  # The legacy .doc contains an embedded binary block in rose 16. Keep the
+  # paragraphs before and after it, and reconnect the sentence it interrupted.
+  if ($number -eq 16) {
+    $garbageStart = [Array]::IndexOf($bodyLines, '隧隄玄奦书')
+    $resumeAt = -1
+    for ($lineIndex = 0; $lineIndex -lt $bodyLines.Count; $lineIndex += 1) {
+      if ($bodyLines[$lineIndex] -match '^歛了一點') { $resumeAt = $lineIndex; break }
+    }
+    if ($garbageStart -gt 0 -and $resumeAt -gt $garbageStart) {
+      $reconnected = $bodyLines[$garbageStart - 1] + ($bodyLines[$resumeAt] -replace '^歛', '斂')
+      $before = if ($garbageStart -gt 1) { @($bodyLines[0..($garbageStart - 2)]) } else { @() }
+      $after = if ($resumeAt + 1 -lt $bodyLines.Count) { @($bodyLines[($resumeAt + 1)..($bodyLines.Count - 1)]) } else { @() }
+      $bodyLines = @($before) + @($reconnected) + @($after)
+    }
+  }
+
+  # Rose 33 is the final article. Stop before the book's afterword and
+  # submission information, which are not part of the card story.
+  if ($number -eq 33) {
+    $afterwordAt = -1
+    for ($lineIndex = 0; $lineIndex -lt $bodyLines.Count; $lineIndex += 1) {
+      if ($bodyLines[$lineIndex] -match '^後記') { $afterwordAt = $lineIndex; break }
+    }
+    if ($afterwordAt -gt 0) { $bodyLines = @($bodyLines[0..($afterwordAt - 1)]) }
   }
   $paragraphs = ($bodyLines | ForEach-Object { "        <p>$(Encode-Html $_)</p>" }) -join "`n"
   $rose = $number.ToString('00')
