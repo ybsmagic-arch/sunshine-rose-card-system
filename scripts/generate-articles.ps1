@@ -91,6 +91,14 @@ foreach ($number in 1..33) {
     $bodyLines = @($roseSixText -split "`n")
   }
 
+  # Stop the final story of each volume before the following volume's
+  # standalone chapter page, which is embedded between article headings.
+  if ($number -eq 11 -or $number -eq 22) {
+    $nextVolume = if ($number -eq 11) { '第二卷' } else { '第三卷' }
+    $volumeAt = [Array]::IndexOf($bodyLines, $nextVolume)
+    if ($volumeAt -gt 0) { $bodyLines = @($bodyLines[0..($volumeAt - 1)]) }
+  }
+
   # The legacy .doc contains an embedded binary block in rose 16. Keep the
   # paragraphs before and after it, and reconnect the sentence it interrupted.
   if ($number -eq 16) {
