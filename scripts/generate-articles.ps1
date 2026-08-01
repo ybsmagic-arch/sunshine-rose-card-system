@@ -99,6 +99,21 @@ foreach ($number in 1..33) {
     if ($volumeAt -gt 0) { $bodyLines = @($bodyLines[0..($volumeAt - 1)]) }
   }
 
+  # Rejoin rose 33 lines that were split by the legacy Yahoo URL and book
+  # title formatting in the original Word document.
+  if ($number -eq 33) {
+    $roseThirtyThreeText = ($bodyLines -join "`n")
+    $roseThirtyThreeText = $roseThirtyThreeText.Replace(
+      "看了王力宏之前的報導（http://tw.myblog.yahoo.com/ybs-company/article?mid=603`nprev=604`nnext=602）我一直在思考：",
+      "看了王力宏之前的報導（http://tw.myblog.yahoo.com/ybs-company/article?mid=603&prev=604&next=602），我一直在思考："
+    )
+    $roseThirtyThreeText = $roseThirtyThreeText.Replace(
+      "很喜歡紀伯倫在`n先知`n中「論孩子」這一段",
+      "很喜歡紀伯倫在《先知》中「論孩子」這一段"
+    )
+    $bodyLines = @($roseThirtyThreeText -split "`n")
+  }
+
   # The legacy .doc contains an embedded binary block in rose 16. Keep the
   # paragraphs before and after it, and reconnect the sentence it interrupted.
   if ($number -eq 16) {
