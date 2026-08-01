@@ -441,6 +441,27 @@ textarea:focus {
   line-height: 1.68;
 }
 
+.article-link {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 0.85rem;
+  border-bottom: 1px solid currentColor;
+  color: var(--rose);
+  font-weight: 800;
+  line-height: 1.45;
+  text-decoration: none;
+}
+
+.article-link::after {
+  content: " →";
+  margin-left: 0.25rem;
+}
+
+.article-link:hover,
+.article-link:focus-visible {
+  color: var(--ink);
+}
+
 .side-panel {
   display: grid;
   align-content: start;

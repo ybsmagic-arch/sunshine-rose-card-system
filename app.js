@@ -95,6 +95,7 @@ function drawReading() {
     node.querySelector(".card-number").textContent = `${card.volume} | 玫瑰 ${card.rose}`;
     node.querySelector("h3").textContent = card.title;
     node.querySelector(".card-guidance").textContent = card.guidance;
+    node.querySelector(".article-link").href = `articles/rose-${card.rose}.html`;
     node.querySelector(".card-face").addEventListener("click", () => revealCard(node));
     spread.append(node);
     window.setTimeout(() => revealCard(node), 180 + index * 260);
