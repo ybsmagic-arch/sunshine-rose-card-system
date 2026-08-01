@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>陽光玫瑰抽牌系統</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="top-bar">
+      <a class="brand-mark" href="#appTitle" aria-label="陽光玫瑰首頁">
+        <span class="brand-dot"></span>
+        <span>Sunshine Rose</span>
+      </a>
+      <nav class="top-actions" aria-label="頁面導覽">
+        <a href="#readingForm">開始抽牌</a>
+        <a href="#historyTitle">紀錄</a>
+      </nav>
+    </header>
+
+    <main class="app-shell">
+      <section class="reading-space" aria-labelledby="appTitle">
+        <div class="intro">
+          <p class="kicker">3-minute office oracle</p>
+          <h1 id="appTitle">送你一束充滿陽光的玫瑰</h1>
+          <p class="lead">給忙碌粉領的溫柔抽牌儀式。把會議、關係、選擇與疲憊先放下三分鐘，讓玫瑰卡替你整理此刻最需要看見的訊息。</p>
+        </div>
+
+        <form class="question-panel" id="readingForm">
+          <div class="panel-head">
+            <div>
+              <p class="section-label">Your question</p>
+              <label for="questionInput">今天想問玫瑰什麼？</label>
+            </div>
+            <span class="mini-badge">午休也適合</span>
+          </div>
+
+          <div class="prompt-chips" aria-label="快速問題">
+            <button type="button" data-prompt="我現在最需要看見什麼？">今日提醒</button>
+            <button type="button" data-prompt="這段關係想教會我什麼？">關係整理</button>
+            <button type="button" data-prompt="工作上的下一步，我該怎麼走？">職場方向</button>
+            <button type="button" data-prompt="我該放下什麼，才會更輕？">放鬆重整</button>
+          </div>
+
+          <textarea id="questionInput" rows="3" placeholder="例如：我現在最需要看見什麼？"></textarea>
+
+          <div class="control-row">
+            <div class="segmented" role="group" aria-label="抽牌模式">
+              <button class="mode-button is-active" type="button" data-mode="single">一張指引</button>
+              <button class="mode-button" type="button" data-mode="three">三張牌陣</button>
+            </div>
+            <button class="draw-button" type="submit">洗牌抽卡</button>
+          </div>
+        </form>
+
+        <section class="deck-stage" aria-live="polite">
+          <div class="deck-preview" id="deckPreview">
+            <img src="assets/cards/陽光玫瑰卡片-封面-34.jpg" alt="陽光玫瑰卡封面" />
+            <div class="deck-note">
+              <strong>抽牌前的小儀式</strong>
+              <span>吸氣四拍，吐氣六拍，把答案留一點空間給自己。</span>
+            </div>
+          </div>
+          <div class="spread" id="spread"></div>
+        </section>
+      </section>
+
+      <aside class="side-panel">
+        <section class="message-box">
+          <p class="kicker">Reading</p>
+          <h2 id="readingTitle">先深呼吸，讓問題變清楚</h2>
+          <p id="readingText">抽牌後，這裡會出現卡片給你的整理、提醒與下一步行動。</p>
+          <div class="result-actions" id="resultActions">
+            <span>今日關鍵字</span>
+            <strong id="readingKeyword">等待玫瑰</strong>
+          </div>
+        </section>
+
+        <section class="ritual-box">
+          <p class="section-label">For pink-collar days</p>
+          <h2>適合什麼時候抽？</h2>
+          <ul>
+            <li>進辦公室前：先穩住自己的節奏</li>
+            <li>午休時：從情緒裡抽離一下</li>
+            <li>下班後：把今天的壓力留在今天</li>
+          </ul>
+        </section>
+
+        <section class="history-box">
+          <div class="history-head">
+            <h2 id="historyTitle">抽牌紀錄</h2>
+            <button id="clearHistory" type="button">清除</button>
+          </div>
+          <ol id="historyList"></ol>
+        </section>
+      </aside>
+    </main>
+
+    <template id="cardTemplate">
+      <article class="oracle-card">
+        <button class="card-face" type="button">
+          <span class="position-label"></span>
+          <span class="flip-card">
+            <span class="flip-side back">
+              <img src="assets/cards/陽光玫瑰卡片-封面-34.jpg" alt="" />
+            </span>
+            <span class="flip-side front">
+              <img alt="" />
+            </span>
+          </span>
+        </button>
+        <div class="card-copy">
+          <p class="card-number"></p>
+          <h3></h3>
+          <p class="card-guidance"></p>
+        </div>
+      </article>
+    </template>
+
+    <script src="app.js"></script>
+  </body>
+</html>
