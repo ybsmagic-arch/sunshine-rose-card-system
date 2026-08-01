@@ -30,6 +30,12 @@ foreach ($number in 1..33) {
     $special = [regex]::new('玫瑰33、找到你的「手錶」').Match($clean, 3000)
     if (-not $special.Success) { throw '找不到玫瑰25正文。' }
     $starts[$number] = $special.Index
+  } elseif ($number -eq 29) {
+    # In the manuscript, rose 29 first appears under the working heading
+    # "學習熊蟲"; its final display title appears halfway through the article.
+    $special = [regex]::new('玫瑰29、學習「熊蟲」').Match($clean, 3000)
+    if (-not $special.Success) { throw '找不到玫瑰29正文。' }
+    $starts[$number] = $special.Index
   } elseif ($fallbackTitles.ContainsKey($number)) {
     $fallback = [regex]::new([regex]::Escape($fallbackTitles[$number])).Match($clean, 3000)
     if (-not $fallback.Success) { throw "找不到玫瑰$rose 正文。" }
@@ -61,8 +67,9 @@ foreach ($number in 1..33) {
 
   $bodyStart = if ($number -eq 6) { 2 } else { 1 }
   $bodyLines = @($lines | Select-Object -Skip $bodyStart | Where-Object {
-    $_ -notmatch '^讀後心得$' -and
+    $_ -notmatch '^讀後心得(?:～?我的陽光玫瑰)?$' -and
     $_ -notmatch '^～?我的陽光玫瑰$' -and
+    $_ -notmatch '^玫瑰\s*\d{2}\s*、' -and
     $_ -notmatch '^每一篇文章的末尾請' -and
     $_ -notmatch '^後記$' -and
     $_ -notmatch '^徵稿$'
